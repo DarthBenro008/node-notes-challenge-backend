@@ -7,7 +7,19 @@ const userLogin = (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(422).json({ success: false, errors: errors.array() });
   }
-  return res.json({ success: "true" });
+  console.log(req.body);
+  userModel
+    .create({
+      username: req.body.username,
+      password: req.body.password,
+    })
+    .then(() => {
+      return res.json({ status: "account created" });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.json({ success: false });
+    });
 };
 
 module.exports = userLogin;
