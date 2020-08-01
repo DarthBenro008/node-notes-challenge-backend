@@ -17,7 +17,9 @@ router.post(
       .trim()
       .escape(),
   ],
-  notesController
+  notesController.createNotes
 );
+
+router.get('/sites',notesController.fetchNotes)
 
 module.exports = router;

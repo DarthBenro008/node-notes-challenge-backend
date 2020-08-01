@@ -11,7 +11,7 @@ const createNotes = async (req, res) => {
     .create({
       title: req.body.title,
       body: req.body.body,
-      userId: req.body.id,
+      userId: req.query.user,
     })
     .then(() => {
       return res.json({ status: "sucess" });
@@ -22,4 +22,16 @@ const createNotes = async (req, res) => {
     });
 };
 
-module.exports = createNotes;
+const fetchNotes = async (req, res) => {
+  const notesInfo = await notesModel.findAll({
+    where: { userId: req.query.user },
+  });
+  console.log(notesInfo[0]);
+  if (notesInfo === null) {
+    return res.json({ success: false });
+  } else {
+    return res.json({ notes: notesInfo });
+  }
+};
+
+module.exports = {createNotes,fetchNotes};
