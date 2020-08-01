@@ -1,7 +1,29 @@
 const { validationResult } = require("express-validator");
 const userModel = require("../models/user");
 
-const userLogin = (req, res) => {
+const userLogin = async (req, res) => {
+  const errors = validationResult(req);
+  const mailArray = [];
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ success: false, errors: errors.array() });
+  }
+
+  const userInfo = await userModel.findOne({
+    where: { username: req.body.username },
+  });
+  if (userInfo === null) {
+    console.log("Not Found");
+    return res.json({ status: false, error: "User Does not exist!" });
+  } else {
+    console.log(userInfo.password);
+    if (userInfo.password === req.body.password) {
+      return res.json({ status: "success", userId: userInfo.id });
+    }
+    return res.json({ status: false, error: "Invalid Password" });
+  }
+};
+
+const userRegistration = (req, res) => {
   const errors = validationResult(req);
   const mailArray = [];
   if (!errors.isEmpty()) {
@@ -22,4 +44,4 @@ const userLogin = (req, res) => {
     });
 };
 
-module.exports = userLogin;
+module.exports = { userRegistration, userLogin };
