@@ -1,8 +1,9 @@
 const Sequelize = require('sequelize')
 
-const sequelize = new Sequelize('node-database','nodejs','node',{
+const sequelize = new Sequelize('node-database','root','toor',{
     dialect:'mysql',
-    host:'localhost'
+    host:'localhost',
+    logging:true
 })
 
 module.exports.sequelize
