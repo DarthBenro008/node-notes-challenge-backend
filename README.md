@@ -9,3 +9,5 @@ ENCRYPTION_KEY= //db encryption key
 ```
 
 Generate Encryption key using : command 'openssl rand -hex 32'
+
+Companion Android App:  [andorid app](https://github.com/DarthBenro008/node-notes-android) 
