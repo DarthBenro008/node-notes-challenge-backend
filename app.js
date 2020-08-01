@@ -3,17 +3,8 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
 
-//const sequelize = require('./utils/database')
-
-
-const Sequelize = require('sequelize')
-
-const sequelize = new Sequelize('node-database','root','toor',{
-    dialect:'mysql',
-    host:'localhost',
-    logging:true
-})
-
+const sequelize = require("./utils/database");
+const authRoute = require('./routes/authRoute')
 
 const app = express();
 app.use(
@@ -27,12 +18,17 @@ app.use(helmet());
 app.use(morgan("common"));
 
 require("dotenv").config();
-sequelize.sync()
-.then(()=>{
-    console.log("Success connection to db")
-}).catch(err =>{
-    console.log(`Failure to connect to db due to ${err}`)
-})
+
+sequelize
+  .sync({ force: true })
+  .then(() => {
+    console.log("Success connection to db");
+  })
+  .catch((err) => {
+    console.log(`Failure to connect to db due to ${err}`);
+  });
+
+app.use("/app",authRoute)
 app.get("/api", (req, res) => {
   res.send("Hey There!");
 });
