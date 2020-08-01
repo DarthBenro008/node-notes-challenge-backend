@@ -3,6 +3,8 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
 
+
+require('dotenv').config();
 const sequelize = require("./utils/database");
 const authRoute = require('./routes/authRoute')
 
@@ -17,7 +19,7 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("common"));
 
-require("dotenv").config();
+
 
 sequelize
   .sync({ force: true })
