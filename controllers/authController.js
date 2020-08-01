@@ -40,7 +40,7 @@ const userRegistration = (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      return res.json({ success: false });
+      return res.json({ success: false, error: err.toString() });
     });
 };
 
